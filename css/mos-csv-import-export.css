@@ -1,0 +1,14 @@
+.alert {
+	padding: 11px 15px;
+}
+.import-part,
+.export-part {
+	padding: 25px;
+	border: 1px solid #ddd;
+	border-top-style: none;
+	border-radius: 0 0 4px 4px;
+}
+.btn-submit-step-2 {
+	margin-top: 25px;
+	line-height: 14px;
+}
