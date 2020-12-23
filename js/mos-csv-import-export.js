@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-	$("a.media-uploader").live("click", function(e){
+	$("a.media-uploader").on("click", function(e){
         e.preventDefault();        
         var csvUploader = wp.media({
             // 'title'     : 'Upload Map csv',
@@ -40,7 +40,7 @@ jQuery(document).ready(function($) {
             }
         })         
     }
-    $("button.btn-submit-step-2").live("click", function (event) {
+    $("button.btn-submit-step-2").on("click", function (event) {
         event.preventDefault();
         $('#processBtn').show();
         var post_title = $("#post_title").val();

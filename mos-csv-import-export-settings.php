@@ -1,28 +1,5 @@
 <?php
 function mos_csv_importer_export_admin_menu () {
-
-    //add a new menu item. This is a top level menu item i.e., this menu item can have sub menus
-    //add_menu_page( $page_title, $menu_title, $capability, $menu_slug, $function = '', $icon_url = '', $position = null )
-
-    /*if ( empty ( $GLOBALS['admin_page_hooks']['mos-plugins-dashboard'] ) ) {
-        add_menu_page(
-            'Mos Plugins Dashboard',
-            'Mos Plugins',
-            'manage_options',
-            'mos-plugins-dashboard',
-            'mos_plugins_dashboard_page',
-            plugins_url( 'images/logo-white-min.png', __FILE__ ),
-            60
-        );
-    }
-    add_submenu_page( 
-        'mos-plugins-dashboard', 
-        'Mos CSV Import/Export', 
-        'CSV Import/Export', 
-        'manage_options',
-        'mos-csv-importer-export-options', 
-        'mos_csv_importer_export_page' 
-    );*/
     add_menu_page( 
         'Mos CSV Import/Export', 
         'CSV Import/Export', 
@@ -35,16 +12,6 @@ function mos_csv_importer_export_admin_menu () {
 }
 add_action("admin_menu", "mos_csv_importer_export_admin_menu");
 
-if ( !function_exists('mos_plugins_dashboard_page')) {
-    function mos_plugins_dashboard_page () {
-        ?>
-        <div class="wrap">
-            <h1><?php _e("Mos Plugins Dashboard") ?></h1>
-            <?php settings_errors(); ?>
-        </div>
-        <?php
-    }
-}
 
 function mos_csv_importer_export_page () {
     if( isset( $_GET[ 'tab' ] ) ) {
@@ -52,7 +19,8 @@ function mos_csv_importer_export_page () {
     }
     ?>
         <div class="wrap">
-            <h1><?php _e("Mos page importer") ?></h1>
+            <div class="wpallexport-logo">Logo</div>
+            <h1><?php _e("Mos CSV Import/Export") ?></h1>
             <?php settings_errors(); ?>
             <ul class="nav nav-tabs">
                 <li class="<?php if($active_tab != 'export') echo 'active';?>"><a href="?page=mos-csv-importer-export-options&tab=import">Import</a></li>
@@ -64,7 +32,7 @@ function mos_csv_importer_export_page () {
                     <div class="alert alert-warning">
                         <strong>IMPORTANT:</strong> Be sure to create a full database backup of your site before you begin the import process.
                     </div> 
-                    <div class="well well-sm">For Upload a CSV file <a class="media-uploader" href="jaascript:viod(0)">click here</a>, for download a sample CSV file <a href="">click here</a>.</div> 
+                    <div class="well well-sm">For Upload a CSV file <a class="media-uploader" href="jaascript:viod(0)">click here</a>.</div> 
                     <p id="csv-file-error" class="text-danger"></p>
                     <p id="successMsg" class="text-success"></p>
                 </div>
