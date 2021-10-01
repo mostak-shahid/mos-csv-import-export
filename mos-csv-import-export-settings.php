@@ -26,7 +26,7 @@ function mos_csv_importer_export_page () {
                 <li class="<?php if($active_tab != 'export') echo 'active';?>"><a href="?page=mos-csv-importer-export-options&tab=import">Import</a></li>
                 <li class="<?php if($active_tab == 'export') echo 'active';?>"><a href="?page=mos-csv-importer-export-options&tab=export">Export</a></li>
             </ul>
-        <?php if($active_tab != 'export') : ?>
+        <?php if(@$active_tab != 'export') : ?>
             <div class="import-part">
                 <div class="step-1">
                     <div class="alert alert-warning">
@@ -37,11 +37,38 @@ function mos_csv_importer_export_page () {
                     <p id="successMsg" class="text-success"></p>
                 </div>
                 <div class="step-2" style="display: none">
-                    <form class="row" method="post" action="<?php echo admin_url('admin-ajax.php') ?>">
+                    <form id="mos-csv-import-form" class="row" method="post" action="<?php echo admin_url('admin-ajax.php') ?>">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="post_title">Post Type</label>
+                                <select class="form-control ajax-valu" id="post_title" name="post_type">
+                                    <option value="">Select One</option>
+                                    <option value="post">Posts</option>
+                                    <option value="page">Pages</option>
+                                    <option value="taxonomies">Taxonomies</option>
+                                    <option value="comments">Comments</option>
+                                    <option value="import_users">Users</option>
+                                    <option value="shop_order">WooCommerce Orders</option>
+                                    <option value="shop_coupon">WooCommerce Coupons</option>
+                                    <option value="product">WooCommerce Products</option>
+                                    <option value="woo_reviews">WooCommerce Reviews</option>
+                                    <option value="wp_template">Templates</option>
+                                    <option value="mailpoet_page">MailPoet Page</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="post_title">Page Title</label>
                                 <select class="form-control ajax-valu" id="post_title" name="post_title">
+                                    <option value="">Select One</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="post_title">Content</label>
+                                <select class="form-control ajax-valu" id="post_title" name="post_content">
                                     <option value="">Select One</option>
                                 </select>
                             </div>

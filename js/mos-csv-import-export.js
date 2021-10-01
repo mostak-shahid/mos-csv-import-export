@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
 	$("a.media-uploader").on("click", function(e){
         e.preventDefault();        
-        var csvUploader = wp.media({
+        let csvUploader = wp.media({
             // 'title'     : 'Upload Map csv',
             // 'button'    : {
             //     'text'  : 'Set the csv'
@@ -9,9 +9,9 @@ jQuery(document).ready(function($) {
             'multiple'  : false
         });
         csvUploader.open();
-        var button = $(this);
+        let button = $(this);
         csvUploader.on("select", function(){
-            var csv = csvUploader.state().get("selection").first().toJSON();
+            let csv = csvUploader.state().get("selection").first().toJSON();
             //console.log(csv);
             if (csv.mime != 'text/csv') {
                 $('p#csv-file-error').html('Invalide file format.');
@@ -32,7 +32,7 @@ jQuery(document).ready(function($) {
             success: function(response) {
                 $('.step-1').hide();
                 $('.step-2').show();
-                var noptions = response.options.length;
+                let noptions = response.options.length;
                 for (i = 0; i < noptions; i++) {
                     $('select.ajax-valu').append('<option>'+response.options[i]+'</option>');
                 }
@@ -43,12 +43,13 @@ jQuery(document).ready(function($) {
     $("button.btn-submit-step-2").on("click", function (event) {
         event.preventDefault();
         $('#processBtn').show();
-        var post_title = $("#post_title").val();
-        var yoast_wpseo_title = $("#yoast_wpseo_title").val();
-        var yoast_wpseo_metadesc = $("#yoast_wpseo_metadesc").val();
-        var action = $("#action").val();
-        var csv_file = $("#csv_file").val();
-        //alert(ajax_link);
+        let form = $('#mos-csv-import-form').serializeArray();
+        let post_title = $("#post_title").val();
+        let yoast_wpseo_title = $("#yoast_wpseo_title").val();
+        let yoast_wpseo_metadesc = $("#yoast_wpseo_metadesc").val();
+        let action = $("#action").val();
+        let csv_file = $("#csv_file").val();
+        //console.log(form);
         $.ajax({
             type : "post",
             dataType : "json",
@@ -61,12 +62,13 @@ jQuery(document).ready(function($) {
                 from: 'ajax_call',
                 csv_file : csv_file, 
             },
-            success: function(update) {
+            success: function(result) {
+                console.log(result);
                 $('.step-2').hide();
                 $('.step-1').show();
                 $('#successMsg').html('<strong>Success!</strong> Content has been uploaded')
                 $('#processBtn').hide();
             }
-        })        
+        })       
     })
 })
