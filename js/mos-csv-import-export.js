@@ -27,14 +27,15 @@ jQuery(document).ready(function($) {
         $.ajax({
             type : "post",
             dataType : "json",
-            url : ajax_link,
+            url : ajax_link.ajaxurl,
             data : {action: "mos_csv_data", file : file},
             success: function(response) {
                 $('.step-1').hide();
                 $('.step-2').show();
                 let noptions = response.options.length;
                 for (i = 0; i < noptions; i++) {
-                    $('select.ajax-valu').append('<option>'+response.options[i]+'</option>');
+                    $('select.ajax-value').append('<option>'+response.options[i]+'</option>');
+                    $('datalist#meta-values').append('<option>'+response.options[i]+'</option>');
                 }
                 $('#processBtn').hide();
             }
@@ -53,13 +54,14 @@ jQuery(document).ready(function($) {
         $.ajax({
             type : "post",
             dataType : "json",
-            url : ajax_link,
+            url : ajax_link.ajaxurl,
             data : {
                 action: action, 
-                post_title : post_title, 
-                yoast_wpseo_title: yoast_wpseo_title,
-                yoast_wpseo_metadesc: yoast_wpseo_metadesc,
+                //post_title : post_title, 
+                //yoast_wpseo_title: yoast_wpseo_title,
+                //yoast_wpseo_metadesc: yoast_wpseo_metadesc,
                 from: 'ajax_call',
+                form: form,
                 csv_file : csv_file, 
             },
             success: function(result) {
@@ -70,5 +72,16 @@ jQuery(document).ready(function($) {
                 $('#processBtn').hide();
             }
         })       
-    })
+    });
+    $('button#meta-add-more-btn').on('click',function(e){
+        e.preventDefault();
+        let count = $('#meta-field-count').val();
+        let html = $('#meta-blank').clone().removeClass('hide').removeAttr('id');
+        html.find('.meta-name').attr('name','meta['+count+'][name]');
+        html.find('.meta-value').attr('name','meta['+count+'][value]');
+        count++;
+        $('#meta-field-count').val(count);
+        $(this).before(html);
+        //console.log(html);        
+    });
 })

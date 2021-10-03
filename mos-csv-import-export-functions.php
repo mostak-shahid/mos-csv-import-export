@@ -10,7 +10,12 @@ function mos_csv_admin_enqueue_scripts(){
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'bootstrap.min', plugins_url( 'js/bootstrap.min.js', __FILE__ ), array('jquery') );
 		wp_enqueue_script( 'mos-csv-import-export', plugins_url( 'js/mos-csv-import-export.js', __FILE__ ), array('jquery') );
-		wp_localize_script('mos-csv-import-export',  'ajax_link', admin_url( 'admin-ajax.php' ));
+		//wp_localize_script('mos-csv-import-export',  'ajax_link', admin_url( 'admin-ajax.php' ));
+        wp_localize_script( 'mos-csv-import-export', 'ajax_link',
+            array( 
+                'ajaxurl' => admin_url( 'admin-ajax.php' ),
+            )
+        );
 	}
 }
 add_action( 'admin_enqueue_scripts', 'mos_csv_admin_enqueue_scripts' );
@@ -39,11 +44,13 @@ function mos_csv_upload_callback() {
 	$post_title = $_POST['post_title'];
 	$post_content = $_POST['post_content'];
 	$post_type = $_POST['post_type'];
-	$yoast_wpseo_title = $_POST['yoast_wpseo_title'];
-	$yoast_wpseo_metadesc = $_POST['yoast_wpseo_metadesc'];
-	$from = $_POST['from'];
-	$form = $_POST['form'];
-    echo json_encode($_POST);
+	//$yoast_wpseo_title = $_POST['yoast_wpseo_title'];
+	//$yoast_wpseo_metadesc = $_POST['yoast_wpseo_metadesc'];
+	//$from = $_POST['from'];
+	//$form = $_POST['form'];
+    $params = array();
+    parse_str($_POST, $params);
+    echo json_encode($_POST['form']);
     die();
 
 	//$rows   = array_map('str_getcsv', file($_POST['file']));
@@ -55,11 +62,13 @@ function mos_csv_upload_callback() {
 	}
 	$nor = sizeof($rows);
 	foreach ($rows as $value) {
+        echo json_encode($post_title);
+        die();
 	    $slug = sanitize_title($value[$post_title]);
 	    if ($slug) {
             $post_details = array(
 		            'post_title' => $value[$post_title],
-		            'post_name' => $slug,
+		            //'post_name' => $slug,
 		            'post_date' => gmdate("Y-m-d h:i:s"),
 		            'post_content' => $value[$post_content],
 		            'post_status' => 'publish',
