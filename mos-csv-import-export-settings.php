@@ -20,7 +20,6 @@ function mos_csv_importer_export_page () {
     ?>
         <div class="wrap">
             <div class="logo-wrap">                
-                <div class="wpallexport-logo"><a href="http://www.mdmostakshahid.com/" target="_blank"><img src="<?php echo plugins_url('images/logo.png', __FILE__) ?>" alt=""></a></div>
                 <h1><?php _e("Mos CSV Import/Export") ?></h1>
             </div>
             <?php settings_errors(); ?>
