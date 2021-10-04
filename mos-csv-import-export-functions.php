@@ -32,10 +32,8 @@ function mos_csv_data_callback(){
 		$rows   = array_map('str_getcsv', file($data['file']));
 		$data['options'] = array_shift($rows);
 	}
-
-	header("Content-type: text/x-json");
+	//header("Content-type: text/x-json");
 	echo json_encode($data);
-
 	die();
 }
 add_action( 'wp_ajax_mos_csv_upload','mos_csv_upload_callback' );
