@@ -3,7 +3,7 @@
 Plugin Name: Mos CSV Import Export
 Plugin URI: https://www.mdmostakshahid.me/
 Description: A brief description of the Plugin.
-Version: 1.0.1
+Version: 1.0.2
 Author: Md. Mostak Shahid
 Author URI: https://www.mdmostakshahid.me/
 License: GPL3
