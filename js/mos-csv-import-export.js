@@ -44,7 +44,7 @@ jQuery(document).ready(function($) {
     $("button.btn-submit-step-2").on("click", function (event) {
         event.preventDefault();
         $('#processBtn').show();
-        let form = $('#mos-csv-import-form').serializeArray();
+        let form = $('#mos-csv-import-form').serialize();
         let post_title = $("#post_title").val();
         let yoast_wpseo_title = $("#yoast_wpseo_title").val();
         let yoast_wpseo_metadesc = $("#yoast_wpseo_metadesc").val();

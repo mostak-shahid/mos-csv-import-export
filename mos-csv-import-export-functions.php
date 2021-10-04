@@ -41,20 +41,18 @@ function mos_csv_data_callback(){
 add_action( 'wp_ajax_mos_csv_upload','mos_csv_upload_callback' );
 add_action( 'wp_ajax_nopriv_mos_csv_upload','mos_csv_upload_callback' );
 function mos_csv_upload_callback() {	
-	$post_title = $_POST['post_title'];
-	$post_content = $_POST['post_content'];
-	$post_type = $_POST['post_type'];
-	//$yoast_wpseo_title = $_POST['yoast_wpseo_title'];
-	//$yoast_wpseo_metadesc = $_POST['yoast_wpseo_metadesc'];
-	//$from = $_POST['from'];
-	//$form = $_POST['form'];
     $params = array();
-    parse_str($_POST, $params);
-    echo json_encode($_POST['form']);
-    die();
+    parse_str($_POST['form'], $params);
+	$post_title = $params['post_title'];
+	$post_content = $params['post_content'];
+	$post_type = $params['post_type'];
+	$categories = $params['category'];
+	$metas = $params['meta'];
+//    echo json_encode($params['post_title']);
+//    die();
 
 	//$rows   = array_map('str_getcsv', file($_POST['file']));
-	$file = fopen($_POST['csv_file'],"r");
+	$file = fopen($params['csv_file'],"r");
 	$rows = array();
 	$header = fgetcsv($file);
 	while ($row = fgetcsv($file)) {
@@ -62,45 +60,37 @@ function mos_csv_upload_callback() {
 	}
 	$nor = sizeof($rows);
 	foreach ($rows as $value) {
-        echo json_encode($post_title);
-        die();
+//        echo json_encode($post_title);
+//        die();
 	    $slug = sanitize_title($value[$post_title]);
 	    if ($slug) {
             $post_details = array(
-		            'post_title' => $value[$post_title],
-		            //'post_name' => $slug,
-		            'post_date' => gmdate("Y-m-d h:i:s"),
-		            'post_content' => $value[$post_content],
-		            'post_status' => 'publish',
-		            'post_type' => (@$value[$post_type])?$value[$post_type]:$post_type,
-		        );
-		        $post_id = wp_insert_post( $post_details ); 
-		    /*$post = get_page_by_path( $slug , OBJECT );
-		    if (!$post ) {	        
-                $post_details = array(
-		            'post_title' => $value[$post_title],
-		            'post_name' => $slug,
-		            'post_date' => gmdate("Y-m-d h:i:s"),
-		            'post_content' => $value[$post_content],
-		            'post_status' => 'publish',
-		            'post_type' => ($value[$post_type])?$value[$post_type]:$post_type,
-		        );
-		        $post_id = wp_insert_post( $post_details );  
-		        if($value[$yoast_wpseo_title]) {add_post_meta( $post_id, '_yoast_wpseo_title', $value[$yoast_wpseo_title] );}
-		        if($value[$yoast_wpseo_metadesc]){add_post_meta( $post_id, '_yoast_wpseo_metadesc', $value[$yoast_wpseo_metadesc] );}
-		        //add_post_meta( $post_id, '_yoast_wpseo_focuskw', $row["Primary"] . ', ' . $row["Secondary"]);
-		        //add_post_meta( $post_id, '_yoast_wpseo_focuskw_text_input', $row["Primary"] . ', ' . $row["Secondary"] );
-		    } else {
-		    	$post_details = array(
-		    		'ID'           => $post,
-		            'post_title' => $row[$post_title],
-		        );
-		        wp_update_post( $post_details );
-		        if($value[$yoast_wpseo_title]) {update_post_meta( $post->ID, '_yoast_wpseo_title', $value[$yoast_wpseo_title] );}
-		        if($value[$yoast_wpseo_metadesc]){update_post_meta( $post->ID, '_yoast_wpseo_metadesc', $value[$yoast_wpseo_metadesc] );}
-		       // update_post_meta( $post->ID, '_yoast_wpseo_focuskw', $row["Primary"] . ', ' . $row["Secondary"]);
-		        //update_post_meta( $post->ID, '_yoast_wpseo_focuskw_text_input', $row["Primary"] . ', ' . $row["Secondary"] );
-			}*/
+                'post_title' => $value[$post_title],
+                'post_name' => $slug,
+                'post_date' => gmdate("Y-m-d h:i:s"),
+                'post_content' => $value[$post_content],
+                'post_status' => 'publish',
+                'post_type' => (@$value[$post_type])?$value[$post_type]:$post_type,
+            );
+            $post_id = wp_insert_post( $post_details ); 
+            
+            if ($value[$categories]) {
+                $catArr = explode('|',$value[$categories]);
+                foreach($catArr as $cat) {
+                    $term = get_term_by('name', $cat, 'product_cat');
+                    wp_set_object_terms($post_id, $term->term_id, 'product_cat');
+                }
+            }
+            else {                
+                $term = get_term_by('name', 'Uncategorized', 'product_cat');
+                wp_set_object_terms($post_id, $term->term_id, 'product_cat');
+            }
+            
+            if (sizeof($metas)){
+                foreach($metas as $meta) {
+                    if ($meta['name']) update_post_meta($post_id, $meta['name'], $value[$meta['value']]);
+                }
+            }
 		}
 	}
 	echo 1;

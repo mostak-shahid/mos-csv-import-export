@@ -13,3 +13,16 @@
 	line-height: 14px;
 }
 .mb-20{margin-bottom: 20px;}
+.logo-wrap {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    margin-bottom: 20px;
+}
+.logo-wrap .wpallexport-logo img {
+    width: 40px;
+    height: auto;
+    margin-right: 10px;
+}

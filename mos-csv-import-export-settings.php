@@ -19,8 +19,10 @@ function mos_csv_importer_export_page () {
     }
     ?>
         <div class="wrap">
-            <div class="wpallexport-logo">Logo</div>
-            <h1><?php _e("Mos CSV Import/Export") ?></h1>
+            <div class="logo-wrap">                
+                <div class="wpallexport-logo"><a href="http://www.mdmostakshahid.com/" target="_blank"><img src="<?php echo plugins_url('images/logo.png', __FILE__) ?>" alt=""></a></div>
+                <h1><?php _e("Mos CSV Import/Export") ?></h1>
+            </div>
             <?php settings_errors(); ?>
             <ul class="nav nav-tabs">
                 <li class="<?php if($active_tab != 'export') echo 'active';?>"><a href="?page=mos-csv-importer-export-options&tab=import">Import</a></li>
@@ -39,50 +41,44 @@ function mos_csv_importer_export_page () {
                 <div class="step-2" style="display: none">
                     <form id="mos-csv-import-form" class="row" method="post" action="<?php echo admin_url('admin-ajax.php') ?>">
 
-                                <div class="form-group">
-                                    <label for="post_title">Post Type</label>
-                                    <select class="form-control ajax-value" id="post_title" name="post_type">
-                                        <option value="">Select One</option>
-                                        <option value="post">Posts</option>
-                                        <option value="page">Pages</option>
-                                        <option value="taxonomies">Taxonomies</option>
-                                        <option value="comments">Comments</option>
-                                        <option value="import_users">Users</option>
-                                        <option value="shop_order">WooCommerce Orders</option>
-                                        <option value="shop_coupon">WooCommerce Coupons</option>
-                                        <option value="product">WooCommerce Products</option>
-                                        <option value="woo_reviews">WooCommerce Reviews</option>
-                                        <option value="wp_template">Templates</option>
-                                        <option value="mailpoet_page">MailPoet Page</option>
-                                    </select>
-                                </div>
+                        <div class="form-group">
+                            <label for="post_title">Post Type</label>
+                            <select class="form-control ajax-value" id="post_title" name="post_type">
+                                <option value="">Select One</option>
+                                <option value="post">Posts</option>
+                                <option value="page">Pages</option>
+                                <option value="taxonomies">Taxonomies</option>
+                                <option value="comments">Comments</option>
+                                <option value="import_users">Users</option>
+                                <option value="shop_order">WooCommerce Orders</option>
+                                <option value="shop_coupon">WooCommerce Coupons</option>
+                                <option value="product">WooCommerce Products</option>
+                                <option value="woo_reviews">WooCommerce Reviews</option>
+                                <option value="wp_template">Templates</option>
+                                <option value="mailpoet_page">MailPoet Page</option>
+                            </select>
+                        </div>
 
-                                <div class="form-group">
-                                    <label for="post_title">Post Title</label>
-                                    <select class="form-control ajax-value" id="post_title" name="post_title">
-                                        <option value="">Select One</option>
-                                    </select>
-                                </div>
+                        <div class="form-group">
+                            <label for="post_title">Post Title</label>
+                            <select class="form-control ajax-value" id="post_title" name="post_title">
+                                <option value="">Select One</option>
+                            </select>
+                        </div>
 
-                                <div class="form-group">
-                                    <label for="post_title">Content</label>
-                                    <select class="form-control ajax-value" id="post_title" name="post_content">
-                                        <option value="">Select One</option>
-                                    </select>
-                                </div>                          
+                        <div class="form-group">
+                            <label for="post_content">Content</label>
+                            <select class="form-control ajax-value" id="post_content" name="post_content">
+                                <option value="">Select One</option>
+                            </select>
+                        </div> 
 
-                                <!--<div class="form-group">
-                                    <label for="yoast_wpseo_metadesc">SEO Meta</label>
-                                    <select class="form-control ajax-value" id="yoast_wpseo_metadesc" name="yoast_wpseo_metadesc">
-                                        <option value="">Select One</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="yoast_wpseo_title">SEO Title</label>
-                                    <select class="form-control ajax-value" id="yoast_wpseo_title" name="yoast_wpseo_title">
-                                        <option value="">Select One</option>
-                                    </select>
-                                </div>-->
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select class="form-control ajax-value" id="category" name="category">
+                                <option value="">Select One</option>
+                            </select>
+                        </div>          
                         <div class="form-inline mb-20">
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Meta Name" name="meta[0][name]">
@@ -90,9 +86,11 @@ function mos_csv_importer_export_page () {
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Meta Value" list="meta-values" name="meta[0][value]">
                             </div>
+<!--
                             <div class="checkbox">
                                 <label><input type="checkbox"> Downloadable</label>
                             </div>
+-->
                         </div> 
                         <button type="submit" class="btn btn-info" id="meta-add-more-btn" style="margin-top: 20px">+ Add More</button>                        
                         <div class="form-group">
@@ -112,9 +110,11 @@ function mos_csv_importer_export_page () {
                         <div class="form-group">
                             <input type="text" class="form-control meta-value" placeholder="Meta Value" list="meta-values">
                         </div>
+<!--
                         <div class="checkbox">
                             <label><input type="checkbox"> Downloadable</label>
                         </div>
+-->
                     </div> 
                 </div>
                 <button id="processBtn" type="button" class="btn btn-info" style="display: none;">
