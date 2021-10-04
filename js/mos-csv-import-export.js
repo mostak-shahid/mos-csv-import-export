@@ -30,6 +30,7 @@ jQuery(document).ready(function($) {
             url : ajax_link.ajaxurl,
             data : {action: "mos_csv_data", file : file},
             success: function(response) {
+                console.log(response);
                 $('.step-1').hide();
                 $('.step-2').show();
                 let noptions = response.options.length;
