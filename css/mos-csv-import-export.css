@@ -16,7 +16,7 @@
 .logo-wrap {
     margin-bottom: 20px;
 }
-.logo-wrap .wpallexport-logo h1 {
+.logo-wrap h1 {
     padding-left: 50px;
     background-image: url(../images/logo.png);
     background-position: left center;
